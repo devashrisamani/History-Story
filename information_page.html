@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+        <title>Ancestral Echoes</title>
+        <link rel="stylesheet" href="css/styles.css">
+        <link rel="stylesheet" href="css/share.css">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+        <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@1,500&display=swap" rel="stylesheet">
+        <!-- Fonts Source: Google Fonts -->
+
+        <!-- Include the jQuery library for handling AJAX requests -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"> </script>
+
+        <script type="text/javascript">
+            var obj = null;
+            // Function to extract a parameter from the URL
+            function getUrlParam(name) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+                // Define a regular expression to match the parameter in the URL
+                var r = window.location.search.substr(1).match(reg);
+                if (r != null) return unescape(r[2]);
+                return null; 
+            }
+
+            // Read the 'name' parameter from the URL
+            var name = getUrlParam('name');
+            console.log(name);
+            // Retrieve data from sessionStorage based on the 'name' parameter
+            obj = sessionStorage.getItem(name);
+            // If no data is found, display an error message
+            if (obj == null) {
+                alert("Error: cannot get data!");
+            }
+            obj = JSON.parse(obj);
+            console.log(obj);
+          
+ 
+            // Function to populate the page with data when it's fully loaded
+            window.onload = function (){
+                document.getElementById("img-title").innerHTML = obj.title?'"'+obj.title+'"':"-";
+                document.getElementById("summary").innerHTML = obj.summary?obj.summary:"-";
+                document.getElementById("info-img").src = obj.imageURL?obj.imageURL:"";
+                document.getElementById("date").innerHTML = obj.date?obj.date:"-";
+                document.getElementById("creator").innerHTML = obj.name?obj.name:"-";
+                document.getElementById("location").innerHTML = obj.subject?obj.subject:"-";
+                document.getElementById("collection").innerHTML = obj.collection?obj.collection:"-";
+            }
+
+            // Function to open Google search for the title
+            function toGoogle(){
+                window.open("https://www.google.com/search?q="+obj.title);
+            }
+
+            // Function to open Wikipedia page for the title
+            function toWiki(){
+                window.open("https://en.wikipedia.org/wiki/"+obj.title);
+            }
+        </script>
+
+        
+        <!-- Include external CSS libraries for icons
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+        <link rel="stylesheet" href="https://unicons.iconscout.com/release/v3.0.6/css/line.css"> -->
+            
+    </head>
+<body>
+<div class="grid-container">
+    <div class="brand">
+        <img src="Images/logo.png" alt="Logo">
+        <p> Puzzle Information</p>
+    </div>
+    <div class="page-links">
+        <iframe id="spotifyPlayer" width="300" height="80" 
+        frameborder="0" allowfullscreen="" allow="autoplay; 
+        clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+        loading="lazy"></iframe>
+        <button id="nextSongButton" class="menu-button">Next Song</button>
+    </div>
+    <div class="main">
+        <!-- Create a table for layout -->
+        <table border="0">
+            <tr style="display: block;margin-bottom: -8px;
+                        margin-left: -2px;">
+                <td>
+                    <div class="info-title" id="collection" style="position: absolute">Keswick collection</div>
+                    <a href="category.html" class="info-title all">View all collection</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div id="canJigsaw" class="info" style="height: 620px;background-color: #464640;border-color: #000;position: relative">
+                        <img src="" alt="" class="info-img" id="info-img">
+                        <div class="img-title" id="img-title"></div>
+                        <div class="img-info">
+                            <div class="info-item">
+                                <span class="info-item-name">Dates:</span>
+                                <span class="date" id="date"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-item-name">Creator:</span>
+                                <span class="creator" id="creator"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-item-name">Location:</span>
+                                <span class="location" id="location"></span>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td width="20px">
+                    &nbsp;
+                </td>
+                <td style="vertical-align: top;">
+                    <div id="gallery" class="gallery-content" style="height: 620px">
+                        <h3 id="summary" align="left" style="height: 460px;overflow-y: scroll;padding-top: 0;"></h3>
+                        <div class="summary-btn">
+                            <!-- <a href="https://www.flaticon.com/free-icons/google" 
+                                title="google icons">Google icons created by Freepik - Flaticon</a> -->
+
+                            <!-- <a href="https://www.flaticon.com/free-icons/wikipedia" 
+                                title="wikipedia icons">Wikipedia icons created by Freepik - Flaticon</a> -->
+                            <div class="btn">
+                                <img src="/Images/sound.jpeg" alt="">
+                            </div>
+                            <div class="btn" onclick="toGoogle()">
+                                <img src="/Images/google.png" alt="">
+                            </div>
+                            <div class="btn" onclick="toWiki()">
+                                <img src="/Images/wiki.png" alt="">
+                            </div>
+                            <div class="btn"><button class="share">Share</button></div>
+                            <!-- Create a popup for sharing content -->
+                            <div class="popup">
+                                <header>
+                                  <span>Share your learnings!</span>
+                                  <div class="close"><i class="uil uil-times"></i></div>
+                                </header>
+                                <div class="content">
+                                  <div id="capturePic">
+                                      <!--<img src="https://www.newshub.co.nz/home/lifestyle/2019/08/the-top-five-cat-memes-of-all-time-rated/_jcr_content/par/video/image.dynimg.1280.q75.jpg/v1565234972425/KNOWYOURMEME-sad-cat-crying-1120.jpg">
+                                      -->
+                                      </div>
+                                  <ul class="icons">
+                                      <a href="#" id="facebook"><i class="fab fa-facebook-f"></i></a>
+                                      <a href="#" id="twitter"><i class="fab fa-twitter"></i></a>
+                                      <a href="#" id="instagram"><i class="fab fa-pinterest"></i></a>
+                                      <a href="#" id="download"><i class="fa fa-download"></i></a>
+                                  </ul>
+                                  <p>Or copy link</p>
+                                  <div class="field">
+                                    <i class="url-icon uil uil-link"></i>
+                                    <input type="text" readonly value=" ">
+                                    <button>Copy</button>
+                                  </div>
+                                </div>
+                              </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<script src="Script/musicScript.js"></script>
+<script src="Script/share.js"></script>
+</body>
+</html>

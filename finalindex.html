@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ancestral Echoes</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@1,500&display=swap" rel="stylesheet">
+
+    <!-- Include the jQuery library for handling AJAX requests -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+    <script type="text/javascript">
+        // Define puzzle game variables
+        var game = null; // Variable to store the game instance
+        var puzzleData = null; // Store the fetched puzzle data
+        var imageID = "img1"; // Initial image ID
+        var totalRows = 3; //Initial number of rows in the puzzle grid
+        var totalColumns = 3; // Initial number of columns in the puzzle grid
+        var obj = null;
+
+        // Function to initialize the game
+        function InitGame() {
+            // Check if puzzle data is available
+            if (puzzleData) {
+                // Select a random image, title, and summary from the fetched data
+                var randomIndex = Math.floor(Math.random() * puzzleData.length);
+                var selectedArticle = puzzleData[randomIndex];
+                var imageURL = sanitizeImageUrl(selectedArticle.IMAGE);
+                var title = selectedArticle.TITLE;
+                var summary = selectedArticle.SUMMARY;
+                obj = selectedArticle;
+                setSession();
+                console.log(puzzleData);
+
+                document.getElementById("title").innerHTML = title;
+                document.getElementById("summary").innerHTML = summary;
+
+                // Load the selected image as the initial puzzle
+                LoadNewImage("img1", imageURL);
+            }
+        }
+
+
+        // Function to load a new image
+        function LoadNewImage(imgID, imageURL) {
+            imageID = imgID;
+            SetRowsColumn();
+            LoadGame();
+        }
+
+        // Function to change the difficulty level
+        function ChangeDifficultyLevel(difficulty) {
+            // Load the game with the current image, title, and summary
+            SetRowsColumn();
+            LoadGame();
+        } 
+
+
+        // Function to load a new image
+        function LoadNewImage(imgID, imageURL) {
+            imageID = imgID;
+            SetRowsColumn();
+            InsertImage(imageURL);
+            LoadGame();
+        }
+
+        // Function to insert the selected image into the page
+        function InsertImage(imageURL){
+            let image = document.createElement ('img');
+            image.src = imageURL;
+            image.id = imageID;
+            image.width = 300;
+            image.height = 200;
+            image.style = 'display: none;'
+            document.getElementById('test').appendChild(image);
+
+        }
+
+        // Function to load the game
+        function LoadGame() {
+            var canvasID = "canJigsaw";
+            game = new jigsaw(canvasID, imageID, totalRows, totalColumns);
+            game.initDrawing();
+
+        }
+
+        // Function to show a preview of the image
+        function ShowPreview() {
+            if (game) {
+                game.showPreview();
+            }
+        }
+
+        // Function to set the number of rows and columns based on radio button selection
+        function SetRowsColumn() {
+            var r1 = document.getElementById("rd1");
+            var r2 = document.getElementById("rd2");
+            var r3 = document.getElementById("rd3");
+
+            if (r1.checked) {
+                totalRows = 2;
+                totalColumns = 2;
+            } else if (r2.checked) {
+                totalRows = 3;
+                totalColumns = 3;
+            } else if (r3.checked) {
+                totalRows = 4;
+                totalColumns = 4;
+            }
+        }
+
+        // Function to fetch puzzle data from the API and populate the game
+        function FetchPuzzleData() {
+            // Make an AJAX request to fetch the puzzle data
+            $.ajax({
+                url: 'https://data.sa.gov.au/data/api/3/action/datastore_search',
+                data: {
+                    resource_id: '7b89d80d-c74e-4647-bfa7-d1538b068a94',
+                    limit: 50
+                },
+                dataType: 'json',
+                success: function (data) {
+                    puzzleData = data.result.records; // Store the fetched puzzle data
+                    // Initialize the puzzle game with the fetched images
+                    InitGame();
+                    LoadGame();
+                }
+            });
+        }
+
+        // Function to sanitize the image URL
+        function sanitizeImageUrl(imageOriginUrl) {
+            var id = imageOriginUrl.match(/\/B(\d+)\.htm/)[1];
+            return 'https://collections.slsa.sa.gov.au/resource/B+' + id + '/download';
+        }
+
+        // This function is used to store data in the sessionStorage 
+        // object for a given 'collection'.
+        function setSession(){
+            var imageURL = sanitizeImageUrl(obj.IMAGE);
+            var title = obj.TITLE;
+            var summary = obj.SUMMARY;
+            var name = obj.NAME;
+            var date = obj['DATES/PUBLICATION DETAILS'];
+            var subject = obj.SUBJECT;
+            var collection = obj['SERIES/COLLECTION'];
+            var data = {
+                'imageURL':imageURL,
+                'title':title,
+                'summary':summary,
+                'name':name,
+                'date':date,
+                'subject':subject,
+                'collection':collection
+            };
+            // Store the 'data' object as a JSON string in the sessionStorage 
+            // under the 'collection' key.
+            sessionStorage.setItem(collection,JSON.stringify(data));
+            // Set the value of an input field with the name 'obj' 
+            // to the 'collection' value.
+            $("input[name='obj']").val(collection);
+        }
+
+    </script>
+</head>
+<body onload="FetchPuzzleData(); LoadGame();">
+    <div class="grid-container">
+        <div class ="brand">
+            <img src="Images/logo.png" alt="Logo">
+            <p> Puzzle</p>
+        </div>
+        <div class="page-links">
+            <!-- Spotify player iframe (hidden by default) -->
+            <iframe id="spotifyPlayer" width="300" height="80" style="background-color: #A49D91;"
+            frameborder="0" allowfullscreen="" 
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+            loading="lazy"></iframe>
+            <button id="nextSongButton" class="menu-button">Next Song</button>
+        </div>
+        <div class="main">
+            <h1 id="title"></h1>
+            <table>
+                <tr>
+                    <td>
+                        <div>
+                            <canvas id="canJigsaw" width="850" height="575">
+                                <div class="puzzle-pieces"></div> 
+                            </canvas>
+                        </div>
+                        <div>
+                            <table cellpadding="0" cellspacing="0" width="100%">
+                                <tr>
+                                    <td>
+                                        <span>
+                                            <input id="rd1" type="radio" value="Easy" name="r1" onclick="ChangeDifficultyLevel();" checked />
+                                            Easy
+                                            <input id="rd2" type="radio" value="Medium" name="r1" onclick="ChangeDifficultyLevel();" />
+                                            Medium
+                                            <input id="rd3" type="radio" value="Hard" name="r1" onclick="ChangeDifficultyLevel();" />
+                                            Hard
+                                        </span>
+                                    </td>
+                                    <td width="150px">
+                                        <span>
+                                            <input type="button" class="menu-button" value="Show Preview" onclick="ShowPreview()" />
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                    <td width="20px">
+                        &nbsp;
+                    </td>
+                    <td style="vertical-align: top;">
+                        <div id="gallery" class ="gallery-content">
+                            <!-- <h2 align="left">Summary</h2> -->
+                            <h3 id="summary" align ="left"></h3>
+                         <div id="test">
+                         </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <input type="hidden" name="obj" id="obj">
+    <script type="text/javascript" src="Script/jigsawScript.js"></script>
+    <script src="Script/musicScript.js"></script>
+
+</body>
+</html>
+
+
+<!-- References -->
+<!-- YouTube: Puzzle Game in Javascript HTML CSS:https://www.youtube.com/watch?v=S6GNtMGNcUE&t=312s
+Coding Artist Web: Slide Image Puzzle JavaScript:https://codingartistweb.com/2023/03/sliding-image-puzzle-javascript/
+Open AI: ChatGPT : Debugging -->

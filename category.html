@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Collections</title>
+    <link rel="stylesheet" href="css/category.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <div class="grid-container">
+        <div class ="brand">
+            <img src="Images/logo.png" alt="Logo">
+            <p> Collections</p>
+        </div>
+        <div class="page-links">
+            <!-- Spotify player iframe (hidden by default) -->
+            <iframe id="spotifyPlayer" width="300" height="80" style="background-color: #A49D91;"
+            frameborder="0" allowfullscreen="" 
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+            loading="lazy"></iframe>
+            <button id="nextSongButton" class="menu-button">Next Song</button>
+        </div>
+        <div class="main">
+        <div>
+            <img id="collection-title" src="Images/collectionlist.png">
+            <p id="cata-des"> 
+                According to the South Australia Library, 
+                <br>all these photos are categorised into various collections, mainly based on different locations, 
+                <br>with a smaller portion categorised by author and subject matter.
+            </p>
+        </div>
+        <div id="seriesAndCollections"></div>
+        </div> <!-- closes the main div -->
+        </div> <!-- closes the grid-container div -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="Script/category.js"></script>
+        <script src="Script/musicScript.js"></script>
+</body>
+</html>

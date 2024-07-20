@@ -1,0 +1,251 @@
+@font-face {
+   font-family: Magdallena;
+   src: url(/fonts/Magdallena.otf);
+}
+
+@font-face {
+   font-family: KyivTypeSerif;
+   src: url(/fonts/KyivTypeSerif.ttf);
+ }
+
+html, body {
+    background-color: #FAF3E7;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+
+body{
+   font-family: 'Poppins', sans-serif;
+}
+
+h1 {
+    color: #474745;
+    font-weight: 300;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    grid-template-rows: auto 1fr;
+}
+
+.brand {
+   grid-column: 1 / span 2;
+   grid-row: 1;
+   padding: 10px;
+   display: flex;   
+}
+
+.brand p {
+   font-family: Magdallena;
+   color:#3D5A94;
+   font-weight: bold;
+   font-size: 25px;
+}
+
+.brand img{
+   max-width: 200px;
+   max-height: 60px;
+   padding: 20px;
+   margin-left: 60px;
+   margin-right: 20px;
+}
+
+.page-links {
+   grid-column: 3 / span 2;
+   grid-row: 1; 
+   text-align: right;
+   padding: 20px;
+   margin-right: 60px;
+}
+
+.main {
+   grid-column: 1/-1;
+   grid-row:2;
+   width: 75vw;
+   margin: 0 auto;
+}
+
+.menu-button {
+   font-size: 20px;
+   color: white;
+   background-color:#BC5649;
+   padding: 2px 20px;
+   border-style: solid;
+   border-radius: 8px;
+   border-color: white;
+}
+
+.home_splash {
+   width: 100%;
+   height: 40vh;
+   object-fit: cover;
+}
+
+.summary {
+   padding: 20px;
+   margin: 10px;
+}
+
+#title {
+   font-family: 'EB Garamond', serif;; 
+   font-style: italic; 
+   font-size: 30px;
+}
+
+#summary {
+   font-family: KyivTypeSerif;
+   font-weight: 300;
+   line-height: 30pt;
+   padding: 20px;
+}
+
+.gallery-content {
+   background-color: white;
+   height: 579px;
+   width: 320px;
+   border: 2px solid #C8BBA5;
+   overflow: auto;
+   text-align: center; 
+}
+    
+#canJigsaw {
+   background-color: white;
+   width: 850px;
+   height: 575px;
+   border: 2px solid #C8BBA5;
+}
+
+
+/* Music player css */
+    
+#nextSongButton {
+   position: absolute;
+   top: 100px; /* Adjust the top position as needed */
+   right: 20px; /* Adjust the right position as needed */
+   margin-right: 60px;
+ }
+
+
+
+/* Info Page css */
+
+.info-title{
+   font-family: KyivTypeSerif;
+   background-color: #4b4b4b;
+   height: 50px;
+   text-align: center;
+   width: 240px;
+   line-height: 50px;
+   color: #f3f0e5;
+   border-radius: 10px 10px 0 0;
+   float: left;
+   margin-right: 10px;
+   z-index: 1;
+   border: 2px solid #4b4b4b;
+   font-size: 20px;
+   cursor: pointer;
+}
+
+.all{
+   background-color: #ffefea;
+   color: #d75e50;
+   z-index: 0;
+   border: 2px solid #cbb8a2;
+   border-bottom-color: #000;
+   margin-left: 260px;
+}
+
+.info{
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+}
+
+.info .info-img{
+   width: 670px;
+   height: 370px;
+   margin-top: 40px;
+   border: 2px solid #000;
+   border-radius: 20px;
+}
+
+.info .img-title{
+   background-color: #c74d40;
+   height: 70px;
+   line-height: 70px;
+   color: #fff;
+   font-family: 'EB Garamond', serif;
+   font-style: italic;
+   font-size: 40px;
+   margin-top: 10px;
+   padding: 0 20px;
+}
+
+.info .img-info{
+   font-family: KyivTypeSerif;
+   width: 650px;
+   display: flex;
+   flex-wrap: wrap;
+   margin-top: 20px;
+}
+
+.info .img-info .info-item{
+   width: 50%;
+   color: #f1e6dc;
+   margin-top: 10px;
+}
+
+.info .img-info .info-item .info-item-name{
+   color: #e696a1;
+}
+
+.info .img-info .info-item:last-child{
+   width: 100%;
+}
+
+.summary-btn{
+   display: flex;
+   align-items: center;
+   margin: 0 20px;
+   /*justify-content: space-between;*/
+}
+
+.summary-btn .btn{
+   background-color: #e7e1d6;
+   border:1px #cbb8a2 solid;
+   width: 44px;
+   height: 44px;
+   border-radius: 4px;
+   cursor: pointer;
+   margin-top: 20px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   margin-left: 10px;
+   position: relative;
+}
+
+.summary-btn .btn img{
+   object-fit: cover;
+   width: 20px;
+   height: 20px;
+}
+
+.summary-btn .share{
+   width: 100px;
+   background-color: #c74d40;
+   border-color: #c74d40;
+   color: #fff;
+   font-weight: bold;
+}
+
+
+
+
+    
+    
+
+

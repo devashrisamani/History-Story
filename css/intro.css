@@ -1,0 +1,75 @@
+@font-face {
+  font-family: Magdallena;
+  src: url(/fonts/Magdallena.otf);
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #FAF3E7;
+    background-image: url(/Images/intro-background.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .subheading {
+    font-family: Magdallena;
+    font-size: 30px;
+    color: #BC5649;
+  }
+  
+  .image-container {
+    margin-bottom: 20px;
+  }
+  
+  .image-container img {
+    max-width: 50%;
+    display: block;
+    margin: 0 auto;
+  }
+  
+  .header {
+    text-align: center;
+    margin-bottom: 40px; /* Increase the margin to add more space */
+  }
+  
+  .button-container {
+    display: flex;
+    flex-direction: column; /* Align buttons in a column */
+    align-items: center; /* Center the buttons horizontally */
+    margin-bottom: 100px; /* Adjust margin to push the buttons lower */
+  }
+  
+  .play-button a {
+    background-color: #c8bba5;
+    color: white;
+    margin-bottom: 20px; /* Add some space between buttons */
+  }
+  
+  .play-button a:hover {
+    background-color: #cc6659;
+  }
+  
+  .how-to-play-button a,
+  .play-button a {
+    padding: 15px 30px;
+    font-size: 24px;
+    text-decoration: none;
+    border-radius: 100px;
+  }
+  
+  /* .how-to-play-button a {
+    background-color: #008CBA;
+    color: white;
+  }
+  
+  .how-to-play-button a:hover {
+    background-color: #005F6B;
+  } */
